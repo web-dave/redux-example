@@ -11,7 +11,6 @@ import {
   selectAddressGroupIsValid,
   selectSkillGroupData,
 } from '../store/app.state';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   take,
@@ -36,7 +35,6 @@ import { Step } from '../models/steps.interface';
 })
 export class SkillsComponent implements OnInit, OnDestroy {
   title = 'Skill';
-  private router = inject(Router);
   private store = inject(Store<AppState>);
   private fb = inject(NonNullableFormBuilder);
   kill$ = new Subject<void>();

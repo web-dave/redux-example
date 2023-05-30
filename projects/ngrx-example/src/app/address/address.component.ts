@@ -6,7 +6,6 @@ import {
   Validators,
 } from '@angular/forms';
 import { StepComponent } from '../step/step.component';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   take,
@@ -37,7 +36,6 @@ import { Step } from '../models/steps.interface';
 export class AddressComponent implements OnInit, OnDestroy {
   title = 'Address';
   private store = inject(Store<AppState>);
-  private router = inject(Router);
   private fb = inject(NonNullableFormBuilder);
   kill$ = new Subject<void>();
 

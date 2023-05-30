@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { of } from 'rxjs';
+import { Store } from '@ngrx/store';
+import {
+  AppState,
+  selectAddressGroupIsValid,
+  selectPersonalGroupIsValid,
+} from '../store/app.state';
 
 @Component({
   selector: 'app-header',
@@ -11,8 +16,7 @@ import { of } from 'rxjs';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  personalGroupIsValid$ = of(true); // this.store.select(fromRoot.selectPersonalGroupIsValid);
-  addressGroupIsValid$ = of(true); // this.store.select(fromRoot.selectAddressGroupIsValid);
-
-  // constructor(private store: Store<fromRoot.State>) {}
+  store = inject(Store<AppState>);
+  personalGroupIsValid$ = this.store.select(selectPersonalGroupIsValid);
+  addressGroupIsValid$ = this.store.select(selectAddressGroupIsValid);
 }

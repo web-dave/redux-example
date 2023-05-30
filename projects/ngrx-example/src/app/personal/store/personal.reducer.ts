@@ -1,10 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 import { IPersonal, PersonalGroup } from '../../models/personal.interface';
-import {
-  patch,
-  changeValidationStatus,
-  PersonalActions,
-} from './personal.actions';
+import { patch, changeValidationStatus } from './personal.actions';
 
 export interface PersonalState {
   data: IPersonal;

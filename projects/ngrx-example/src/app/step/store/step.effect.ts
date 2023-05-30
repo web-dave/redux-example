@@ -2,8 +2,8 @@ import { Injectable, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { submitStep, navigate } from './step.actions';
-import { exhaustMap, map, of, withLatestFrom } from 'rxjs';
-import { AppState, selectStep } from '../../store/app.state';
+import { map } from 'rxjs';
+import { AppState } from '../../store/app.state';
 import { Store } from '@ngrx/store';
 import { Step } from '../../models/steps.interface';
 

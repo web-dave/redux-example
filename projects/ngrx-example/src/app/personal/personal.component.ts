@@ -2,14 +2,11 @@ import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Validators,
-  FormControl,
-  FormGroup,
   ReactiveFormsModule,
   NonNullableFormBuilder,
 } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { take, map, merge, distinctUntilChanged, filter, Subject } from 'rxjs';
+import { take, map, distinctUntilChanged, Subject } from 'rxjs';
 import { AppState, selectPersonalGroupData } from '../store/app.state';
 import { IPersonal } from '../models/personal.interface';
 import { changeValidationStatus, patch } from './store/personal.actions';
@@ -25,7 +22,6 @@ import { Step } from '../models/steps.interface';
 })
 export class PersonalComponent {
   title = 'Personal';
-  private router = inject(Router);
   private store = inject(Store<AppState>);
   private fb = inject(NonNullableFormBuilder);
   kill$ = new Subject<void>();
