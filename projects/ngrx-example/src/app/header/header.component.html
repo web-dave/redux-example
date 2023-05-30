@@ -7,28 +7,28 @@
           </a>
         </li>
         <li>
-            <!-- *ngIf="personalGroupIsValid$ | async" -->
           <a
+            *ngIf="personalGroupIsValid$ | async"
             routerLink="/address"
             [routerLinkActive]="['active']"
           >
             Address
           </a>
-          <!-- *ngIf="!(personalGroupIsValid$ | async)" -->
-          <button  disabled="true">
+  
+          <button *ngIf="!(personalGroupIsValid$ | async)" disabled="true">
             Address
           </button>
         </li>
         <li>
-            <!-- *ngIf="addressGroupIsValid$ | async" -->
           <a
+            *ngIf="addressGroupIsValid$ | async"
             routerLink="/experience"
             [routerLinkActive]="['active']"
           >
             Experience
           </a>
-          <!-- *ngIf="!(addressGroupIsValid$ | async)" -->
-          <button  disabled="true">
+  
+          <button *ngIf="!(addressGroupIsValid$ | async)" disabled="true">
             Experience
           </button>
         </li>
