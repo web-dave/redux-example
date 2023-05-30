@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { Step } from '../../models/steps.interface';
+import { Step } from '../../../../../../models/steps.interface';
 
 export const submitStep = createAction(
   '[Step] Submit',

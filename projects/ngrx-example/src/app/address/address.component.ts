@@ -22,10 +22,10 @@ import {
   selectAddressGroupData,
   selectPersonalGroupIsValid,
 } from '../store/app.state';
-import { IAddress } from '../models/address.interface';
+import { IAddress } from '../../../../../models/address.interface';
 import { changeValidationStatus, patch } from './store/address.actions';
 import { navigate } from '../step/store/step.actions';
-import { Step } from '../models/steps.interface';
+import { Step } from '../../../../../models/steps.interface';
 
 @Component({
   selector: 'app-address',

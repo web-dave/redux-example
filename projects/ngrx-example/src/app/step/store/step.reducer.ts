@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { Step } from '../../models/steps.interface';
+import { Step } from '../../../../../../models/steps.interface';
 import { submitStep } from './step.actions';
 
 export interface StepState {

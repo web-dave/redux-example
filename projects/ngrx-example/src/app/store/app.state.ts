@@ -4,9 +4,9 @@ import {
   selectAddressGroupDataFn,
   selectAddressGroupIsValidFn,
 } from '../address/store/address.reducer';
-import { AddressGroup } from '../models/address.interface';
-import { PersonalGroup } from '../models/personal.interface';
-import { SkillGroup } from '../models/skill.interface';
+import { AddressGroup } from '../../../../../models/address.interface';
+import { PersonalGroup } from '../../../../../models/personal.interface';
+import { SkillGroup } from '../../../../../models/skill.interface';
 import {
   personalReducer,
   selectPersonalGroupDataFn,

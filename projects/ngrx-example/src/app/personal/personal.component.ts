@@ -8,11 +8,11 @@ import {
 import { Store } from '@ngrx/store';
 import { take, map, distinctUntilChanged, Subject } from 'rxjs';
 import { AppState, selectPersonalGroupData } from '../store/app.state';
-import { IPersonal } from '../models/personal.interface';
+import { IPersonal } from '../../../../../models/personal.interface';
 import { changeValidationStatus, patch } from './store/personal.actions';
 import { StepComponent } from '../step/step.component';
 import { navigate } from '../step/store/step.actions';
-import { Step } from '../models/steps.interface';
+import { Step } from '../../../../../models/steps.interface';
 
 @Component({
   selector: 'app-personal',

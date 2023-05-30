@@ -5,7 +5,7 @@ import { submitStep, navigate } from './step.actions';
 import { map } from 'rxjs';
 import { AppState } from '../../store/app.state';
 import { Store } from '@ngrx/store';
-import { Step } from '../../models/steps.interface';
+import { Step } from '../../../../../../models/steps.interface';
 
 @Injectable()
 export class StepEffects {

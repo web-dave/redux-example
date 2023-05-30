@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { ISkill } from '../../models/skill.interface';
+import { ISkill } from '../../../../../../models/skill.interface';
 
 export const patch = createAction(
   '[Skill Page] Patch Value',

@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { ISkill, SkillGroup } from '../../models/skill.interface';
+import { ISkill, SkillGroup } from '../../../../../../models/skill.interface';
 import { patch, changeValidationStatus, SkillActions } from './skills.actions';
 
 export interface SkillState {

@@ -1,5 +1,8 @@
 import { createReducer, on } from '@ngrx/store';
-import { IAddress, AddressGroup } from '../../models/address.interface';
+import {
+  IAddress,
+  AddressGroup,
+} from '../../../../../../models/address.interface';
 import {
   patch,
   changeValidationStatus,

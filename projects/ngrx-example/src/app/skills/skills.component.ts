@@ -22,10 +22,10 @@ import {
   tap,
   switchMap,
 } from 'rxjs';
-import { ISkill } from '../models/skill.interface';
+import { ISkill } from '../../../../../models/skill.interface';
 import { changeValidationStatus, patch } from './store/skills.actions';
 import { navigate } from '../step/store/step.actions';
-import { Step } from '../models/steps.interface';
+import { Step } from '../../../../../models/steps.interface';
 
 @Component({
   selector: 'app-skills',

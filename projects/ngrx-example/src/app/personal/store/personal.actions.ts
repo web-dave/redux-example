@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { IPersonal } from '../../models/personal.interface';
+import { IPersonal } from '../../../../../../models/personal.interface';
 
 export const patch = createAction(
   '[Personal Page] Patch Value',
