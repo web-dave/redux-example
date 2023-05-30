@@ -22,14 +22,14 @@
         <li>
           <a
             *ngIf="addressGroupIsValid$ | async"
-            routerLink="/experience"
+            routerLink="/skill"
             [routerLinkActive]="['active']"
           >
-            Experience
+            Skill
           </a>
   
           <button *ngIf="!(addressGroupIsValid$ | async)" disabled="true">
-            Experience
+            Skill
           </button>
         </li>
       </ul>

@@ -13,7 +13,7 @@ const routes: Routes = [
       import('./address/address.component').then((m) => m.AddressComponent),
   },
   {
-    path: 'skills',
+    path: 'skill',
     loadComponent: () =>
       import('./skills/skills.component').then((m) => m.SkillsComponent),
   },

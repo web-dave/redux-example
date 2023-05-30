@@ -3,31 +3,38 @@ import {
   addressReducer,
   selectAddressGroupDataFn,
   selectAddressGroupIsValidFn,
-} from './address/store/address.reducer';
-import { AddressGroup } from './models/address.interface';
-import { PersonalGroup } from './models/personal.interface';
-import { SkillGroup } from './models/skill.interface';
+} from '../address/store/address.reducer';
+import { AddressGroup } from '../models/address.interface';
+import { PersonalGroup } from '../models/personal.interface';
+import { SkillGroup } from '../models/skill.interface';
 import {
   personalReducer,
   selectPersonalGroupDataFn,
   selectPersonalGroupIsValidFn,
-} from './personal/store/personal.reducer';
+} from '../personal/store/personal.reducer';
 import {
   selectSkillGroupDataFn,
   selectSkillGroupIsValidFn,
   skillReducer,
-} from './skills/store/skills.reducer';
+} from '../skills/store/skills.reducer';
+import {
+  StepState,
+  selectStepFn,
+  stepReducer,
+} from '../step/store/step.reducer';
 
 export interface AppState {
   personal: PersonalGroup;
   address: AddressGroup;
   skills: SkillGroup;
+  step: StepState;
 }
 
 export const appReducers: ActionReducerMap<AppState> = {
   personal: personalReducer,
   address: addressReducer,
   skills: skillReducer,
+  step: stepReducer,
 };
 
 export const metaReducers: MetaReducer<AppState>[] = [];
@@ -60,4 +67,9 @@ export const selectSkillGroupData = createSelector(
 export const selectSkillGroupIsValid = createSelector(
   selectSkillGroup,
   selectSkillGroupIsValidFn
+);
+
+export const selectStep = createSelector(
+  (state: AppState) => state.step,
+  selectStepFn
 );

@@ -1,18 +1,21 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   Validators,
   FormControl,
   FormGroup,
   ReactiveFormsModule,
+  NonNullableFormBuilder,
 } from '@angular/forms';
 import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { take, map, merge, distinctUntilChanged, filter } from 'rxjs';
-import { AppState, selectPersonalGroupData } from '../app.store';
+import { take, map, merge, distinctUntilChanged, filter, Subject } from 'rxjs';
+import { AppState, selectPersonalGroupData } from '../store/app.state';
 import { IPersonal } from '../models/personal.interface';
 import { changeValidationStatus, patch } from './store/personal.actions';
 import { StepComponent } from '../step/step.component';
+import { navigate } from '../step/store/step.actions';
+import { Step } from '../models/steps.interface';
 
 @Component({
   selector: 'app-personal',
@@ -22,26 +25,27 @@ import { StepComponent } from '../step/step.component';
 })
 export class PersonalComponent {
   title = 'Personal';
-  firstNameCtrl = new FormControl('', [Validators.required]);
-  lastNameCtrl = new FormControl('', [Validators.required]);
-  ageCtrl = new FormControl(0, [
-    Validators.required,
-    Validators.min(18),
-    Validators.max(120),
-  ]);
-  aboutCtrl = new FormControl('', [Validators.required]);
-  personalForm = new FormGroup(
+  private router = inject(Router);
+  private store = inject(Store<AppState>);
+  private fb = inject(NonNullableFormBuilder);
+  kill$ = new Subject<void>();
+
+  personalForm = this.fb.group(
     {
-      firstName: this.firstNameCtrl,
-      lastName: this.lastNameCtrl,
-      age: this.ageCtrl,
-      about: this.aboutCtrl,
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      age: [0, [Validators.required, Validators.min(18), Validators.max(120)]],
+      about: ['', [Validators.required]],
     },
     { updateOn: 'blur' }
   );
-  submitted = false;
 
-  constructor(private router: Router, private store: Store<AppState>) {}
+  firstNameCtrl = this.personalForm.get('firstName');
+  lastNameCtrl = this.personalForm.get('lastName');
+  ageCtrl = this.personalForm.get('age');
+  aboutCtrl = this.personalForm.get('about');
+
+  submitted = false;
 
   ngOnInit() {
     this.store
@@ -51,32 +55,13 @@ export class PersonalComponent {
         this.personalForm.patchValue(personal, { emitEvent: false })
       );
 
-    const firstName$ = this.firstNameCtrl.valueChanges.pipe(
-      filter((data): data is string => !!data),
-      map((firstName: string) => ({ firstName } as Partial<IPersonal>))
-    );
-    const lastName$ = this.lastNameCtrl.valueChanges.pipe(
-      filter((data): data is string => !!data),
-      map((lastName: string) => ({ lastName } as Partial<IPersonal>))
-    );
-    const age$ = this.ageCtrl.valueChanges.pipe(
-      filter((data): data is number => !!data),
-      map((age: number) => ({ age } as Partial<IPersonal>))
-    );
-    const about$ = this.aboutCtrl.valueChanges.pipe(
-      filter((data): data is string => !!data),
-      map((about: string) => ({ about } as Partial<IPersonal>))
-    );
+    this.personalForm.valueChanges.subscribe((payload: Partial<IPersonal>) => {
+      this.store.dispatch(patch({ payload }));
+    });
 
-    merge(firstName$, lastName$, age$, about$).subscribe(
-      (payload: Partial<IPersonal>) => {
-        this.store.dispatch(patch({ payload }));
-      }
-    );
-
-    this.personalForm.valueChanges
+    this.personalForm.statusChanges
       .pipe(
-        map(() => this.personalForm.valid),
+        map((status) => status === 'VALID'),
         distinctUntilChanged()
       )
       .subscribe((isValid: boolean) =>
@@ -89,7 +74,6 @@ export class PersonalComponent {
       this.submitted = true;
       return;
     }
-
-    this.router.navigate(['address']);
+    this.store.dispatch(navigate({ payload: 'NEXT', step: Step.one }));
   }
 }
