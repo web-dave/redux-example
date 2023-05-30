@@ -1,0 +1,37 @@
+<header>
+    <nav>
+      <ul>
+        <li>
+          <a routerLink="/personal" [routerLinkActive]="['active']">
+            Personal
+          </a>
+        </li>
+        <li>
+            <!-- *ngIf="personalGroupIsValid$ | async" -->
+          <a
+            routerLink="/address"
+            [routerLinkActive]="['active']"
+          >
+            Address
+          </a>
+          <!-- *ngIf="!(personalGroupIsValid$ | async)" -->
+          <button  disabled="true">
+            Address
+          </button>
+        </li>
+        <li>
+            <!-- *ngIf="addressGroupIsValid$ | async" -->
+          <a
+            routerLink="/experience"
+            [routerLinkActive]="['active']"
+          >
+            Experience
+          </a>
+          <!-- *ngIf="!(addressGroupIsValid$ | async)" -->
+          <button  disabled="true">
+            Experience
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>

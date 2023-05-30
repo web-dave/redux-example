@@ -1,7 +1,5 @@
-@import '~src/variables.scss';
-
 header {
-  background-color: darken($base-color, 15);
+  background-color: darken(#444, 15);
   height: 10vh;
   display: flex;
   align-items: center;
@@ -26,7 +24,7 @@ section {
 
     button {
       border: none;
-      background: darken($base-color, 10);
+      background: darken(#444, 10);
       height: max-content;
       align-self: center;
       display: flex;
@@ -53,7 +51,7 @@ section {
       &:focus,
       &:hover {
         outline: 0.2rem white solid;
-        background: darken($base-color, 20);
+        background: darken(#444, 20);
       }
     }
   }

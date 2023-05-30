@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start:rx": "ng serve --project ngrx-example",
+    "start:xs": "ng serve --project ngxs-example",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
