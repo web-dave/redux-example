@@ -5,6 +5,7 @@
     "ng": "ng",
     "start:rx": "ng serve --project ngrx-example",
     "start:xs": "ng serve --project ngxs-example",
+    "nice": "ng serve --project nice-example",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"

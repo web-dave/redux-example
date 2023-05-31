@@ -1,0 +1,37 @@
+<header>
+    <nav>
+      <ul>
+        <li>
+          <a routerLink="/personal" [routerLinkActive]="['active']">
+            Personal
+          </a>
+        </li>
+        <li>
+          <a
+            *ngIf="personalGroupIsValid$ | async"
+            routerLink="/address"
+            [routerLinkActive]="['active']"
+          >
+            Address
+          </a>
+  
+          <button *ngIf="!(personalGroupIsValid$ | async)" disabled="true">
+            Address
+          </button>
+        </li>
+        <li>
+          <a
+            *ngIf="addressGroupIsValid$ | async"
+            routerLink="/skill"
+            [routerLinkActive]="['active']"
+          >
+            Skill
+          </a>
+  
+          <button *ngIf="!(addressGroupIsValid$ | async)" disabled="true">
+            Skill
+          </button>
+        </li>
+      </ul>
+    </nav>
+  </header>
