@@ -1,37 +1,17 @@
-<header>
-    <nav>
-      <ul>
-        <li>
-          <a routerLink="/personal" [routerLinkActive]="['active']">
-            Personal
-          </a>
-        </li>
-        <li>
-          <a
-            *ngIf="personalGroupIsValid$ | async"
-            routerLink="/address"
-            [routerLinkActive]="['active']"
-          >
-            Address
-          </a>
-  
-          <button *ngIf="!(personalGroupIsValid$ | async)" disabled="true">
-            Address
-          </button>
-        </li>
-        <li>
-          <a
-            *ngIf="addressGroupIsValid$ | async"
-            routerLink="/skill"
-            [routerLinkActive]="['active']"
-          >
-            Skill
-          </a>
-  
-          <button *ngIf="!(addressGroupIsValid$ | async)" disabled="true">
-            Skill
-          </button>
-        </li>
-      </ul>
-    </nav>
-  </header>
+<ul>
+  <li [ngClass]="{ active: isActive(step$ | async, 0) }">
+    <div>
+      <p>1</p>
+    </div>
+  </li>
+  <li [ngClass]="{ active: isActive(step$ | async, 1) }">
+    <div>
+      <p>2</p>
+    </div>
+  </li>
+  <li [ngClass]="{ active: isActive(step$ | async, 2) }">
+    <div>
+      <p>3</p>
+    </div>
+  </li>
+</ul>

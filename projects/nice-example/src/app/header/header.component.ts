@@ -1,10 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { of } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { RouterModule } from '@angular/router';
-import { Store } from '@ngxs/store';
+import { Select, Store } from '@ngxs/store';
 import { PersonalState } from '../personal/store/personal.state';
 import { AddressState } from '../address/store/address.state';
+import { Step } from 'models/steps.interface';
+import { StepState } from '../step/store/step.state';
 
 @Component({
   selector: 'app-header',
@@ -15,6 +17,24 @@ import { AddressState } from '../address/store/address.state';
 })
 export class HeaderComponent {
   store = inject(Store);
-  personalGroupIsValid$ = this.store.select(PersonalState.selectIsValid);
-  addressGroupIsValid$ = this.store.select(AddressState.selectIsValid);
+
+  Step = Step;
+
+  @Select(StepState.selectStep)
+  step$!: Observable<Step>;
+
+  isActive(step: Step | null, index: number): boolean {
+    if (step === null) return false;
+
+    switch (step) {
+      case Step.one:
+        return index === 0;
+      case Step.two:
+        return index === 0 || index === 1;
+      case Step.three:
+        return true;
+      default:
+        return false;
+    }
+  }
 }

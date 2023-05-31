@@ -5,7 +5,6 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { StepComponent } from '../step/step.component';
 import { Subject, distinctUntilChanged, map, take } from 'rxjs';
 import { IPersonal } from 'models/personal.interface';
 import { Store } from '@ngxs/store';
@@ -17,8 +16,22 @@ import { PersonalState } from './store/personal.state';
 @Component({
   selector: 'app-personal',
   standalone: true,
-  imports: [CommonModule, ReactiveFormsModule, StepComponent],
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './personal.component.html',
+  styles: [
+    `
+      :host {
+        display: block;
+        /* margin-bottom: 35px; */
+      }
+      h2 {
+        color: var(--header-clr);
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+    `,
+  ],
 })
 export class PersonalComponent {
   title = 'Personal';

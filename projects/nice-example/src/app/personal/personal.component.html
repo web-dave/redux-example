@@ -1,67 +1,81 @@
-<app-step [title]="title" (nextStepClicked)="goToNextStep()">
-    <form [formGroup]="personalForm" [attr.aria-label]="title">
-      <label>
-        <span>First name *</span>
-        <input
-          class="form-control"
-          type="text"
-          formControlName="firstName"
-          required
-        />
-      </label>
+<form [formGroup]="personalForm" [attr.aria-label]="title">
+  <h2>{{ title }}</h2>
+  <div class="form_container">
+    <div class="input_wrap">
+      <label for="firstName">First name *</label>
+      <input
+        id="firstName"
+        class="form-control"
+        type="text"
+        formControlName="firstName"
+        required
+      />
       <span
         class="form-error"
-        *ngIf="submitted && firstNameCtrl?.errors?.['required']"
+        *ngIf="firstNameCtrl?.touched && firstNameCtrl?.errors?.['required']"
       >
         First name is required
       </span>
-  
-      <label>
-        <span>Last name *</span>
-        <input
-          class="form-control"
-          type="text"
-          formControlName="lastName"
-          required
-        />
-      </label>
+    </div>
+    <div class="input_wrap">
+      <label for="lastName">Last name *</label>
+      <input
+        class="form-control"
+        type="text"
+        id="lastName"
+        formControlName="lastName"
+        required
+      />
       <span
         class="form-error"
-        *ngIf="submitted && lastNameCtrl?.errors?.['required']"
+        *ngIf="lastNameCtrl?.touched && lastNameCtrl?.errors?.['required']"
       >
         Last name is required
       </span>
-  
-      <label>
-        <span>Age *</span>
-        <input
-          class="form-control"
-          type="number"
-          formControlName="age"
-          required
-        />
-      </label>
-      <span class="form-error" *ngIf="submitted && ageCtrl?.errors?.['required']">
+    </div>
+    <div class="input_wrap">
+      <label for="age">Age *</label>
+      <input
+        class="form-control"
+        type="number"
+        id="age"
+        formControlName="age"
+        required
+      />
+      <span
+        class="form-error"
+        *ngIf="ageCtrl?.touched && ageCtrl?.errors?.['required']"
+      >
         Age is required
       </span>
-      <span class="form-error" *ngIf="submitted && ageCtrl?.errors?.['min']">
+      <span
+        class="form-error"
+        *ngIf="ageCtrl?.touched && ageCtrl?.errors?.['min']"
+      >
         Age has to be greater or equal than 18
       </span>
-      <span class="form-error" *ngIf="submitted && ageCtrl?.errors?.['max']">
+      <span
+        class="form-error"
+        *ngIf="ageCtrl?.touched && ageCtrl?.errors?.['max']"
+      >
         Age has to be less or equal than 120
       </span>
-  
-      <label>
-        <span>About *</span>
-        <textarea
-          class="form-control"
-          rows="4"
-          formControlName="about"
-          required
-        ></textarea>
-      </label>
-      <span class="form-error" *ngIf="submitted && aboutCtrl?.errors?.['required']">
+    </div>
+    <div class="input_wrap">
+      <label for="about">About *</label>
+      <input
+        class="form-control"
+        type="text"
+        id="about"
+        formControlName="about"
+        required
+      />
+      <span
+        class="form-error"
+        *ngIf="aboutCtrl?.touched && aboutCtrl?.errors?.['required']"
+      >
         About is required
       </span>
-    </form>
-  </app-step>
+    </div>
+  </div>
+</form>

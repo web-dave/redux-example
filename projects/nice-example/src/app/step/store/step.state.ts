@@ -29,24 +29,22 @@ export class StepState {
     ctx: StateContext<IStepState>,
     { payload, step }: StepActions.navigate
   ) {
-    const steps = Object.values(Step);
-    const position = steps.indexOf(step);
-    console.log(steps, step, position);
     let nextRoute = Step.two;
-    switch (position) {
-      case 0:
+    console.log(step, payload);
+    switch (step) {
+      case Step.one:
         if (payload === 'NEXT') {
           nextRoute = Step.two;
         }
         break;
-      case 1:
+      case Step.two:
         if (payload === 'NEXT') {
           nextRoute = Step.three;
         } else {
           nextRoute = Step.one;
         }
         break;
-      case 2:
+      case Step.three:
         if (payload === 'PREV') {
           nextRoute = Step.two;
         }

@@ -1,70 +1,89 @@
-<app-step
-  [title]="title"
-  (previousStepClicked)="goToPreviousStep()"
-  (nextStepClicked)="goToNextStep()"
->
-  <form [formGroup]="addressForm" [attr.aria-label]="title">
-    <label>
-      <span>Country *</span>
+<form [formGroup]="addressForm" [attr.aria-label]="title">
+  <h2>{{ title }}</h2>
+
+  <div class="form_container">
+    <div class="input_wrap">
+      <label for="country">Country *</label>
       <input
         class="form-control"
         type="text"
         formControlName="country"
         required
+        id="country"
       />
-    </label>
-    <span class="form-error" *ngIf="submitted && countryCtrl?.errors?.['required']">
-      Country is required
-    </span>
-
-    <label>
-      <span>State *</span>
+      <span
+        class="form-error"
+        *ngIf="countryCtrl?.touched && countryCtrl?.errors?.['required']"
+      >
+        Country is required
+      </span>
+    </div>
+    <div class="input_wrap">
+      <label for="state">State *</label>
       <input
         class="form-control"
         type="text"
         formControlName="state"
         required
+        id="state"
       />
-    </label>
-    <span class="form-error" *ngIf="submitted && stateCtrl?.errors?.['required']">
-      State is required
-    </span>
 
-    <label>
-      <span>City *</span>
-      <input class="form-control" type="text" formControlName="city" required />
-    </label>
-    <span class="form-error" *ngIf="submitted && cityCtrl?.errors?.['required']">
-      City is required
-    </span>
+      <span
+        class="form-error"
+        *ngIf="stateCtrl?.touched && stateCtrl?.errors?.['required']"
+      >
+        State is required
+      </span>
+    </div>
+    <div class="input_wrap">
+      <label for="city">City *</label>
+      <input
+        class="form-control"
+        type="text"
+        formControlName="city"
+        required
+        id="city"
+      />
 
-    <label>
-      <span>Street *</span>
+      <span
+        class="form-error"
+        *ngIf="cityCtrl?.touched && cityCtrl?.errors?.['required']"
+      >
+        City is required
+      </span>
+    </div>
+    <div class="input_wrap">
+      <label for="street">Street *</label>
       <input
         class="form-control"
         type="text"
         formControlName="street"
         required
+        id="street"
       />
-    </label>
-    <span class="form-error" *ngIf="submitted && streetCtrl?.errors?.['required']">
-      Street is required
-    </span>
-
-    <label>
-      <span>Building *</span>
+      <span
+        class="form-error"
+        *ngIf="streetCtrl?.touched && streetCtrl?.errors?.['required']"
+      >
+        Street is required
+      </span>
+    </div>
+    <div class="input_wrap">
+      <label for="building">Building *</label>
       <input
         class="form-control"
         type="text"
         formControlName="building"
         required
+        id="building"
       />
-    </label>
-    <span
-      class="form-error"
-      *ngIf="submitted && buildingCtrl?.errors?.['required']"
-    >
-      Building is required
-    </span>
-  </form>
-</app-step>
+
+      <span
+        class="form-error"
+        *ngIf="buildingCtrl?.touched && buildingCtrl?.errors?.['required']"
+      >
+        Building is required
+      </span>
+    </div>
+  </div>
+</form>

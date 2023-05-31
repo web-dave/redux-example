@@ -1,17 +1,30 @@
-<section>
-    <header>
-      <h1>{{ title }}</h1>
-    </header>
-  
-    <div>
-      <button id="previous-button" (click)="goToPreviousStep()">
-        <i class="material-icons">navigate_before</i> <span>Previous</span>
-      </button>
-  
-      <ng-content></ng-content>
-  
-      <button id="next-button" (click)="goToNextStep()">
-        <span>Next</span> <i class="material-icons">navigate_next</i>
-      </button>
-    </div>
-  </section>
+<div class="btns_wrap" [ngSwitch]="step$ | async">
+  <div class="common_btns form_1_btns" *ngSwitchCase="Step.one">
+    <button
+      type="button"
+      class="btn_next"
+      (click)="goToNextStep()"
+      [disabled]="!(personalGroupIsValid$ | async)"
+    >
+      Next <span class="icon"><i class="material-icons">navigate_next</i></span>
+    </button>
+  </div>
+  <div class="common_btns form_2_btns" *ngSwitchCase="Step.two">
+    <button type="button" class="btn_back" (click)="goToPreviousStep()">
+      <span class="icon"><i class="material-icons">navigate_before</i></span
+      >Back
+    </button>
+    <button type="button" class="btn_next" (click)="goToNextStep()">
+      Next <span class="icon"><i class="material-icons">navigate_next</i></span>
+    </button>
+  </div>
+  <div class="common_btns form_3_btns" *ngSwitchCase="Step.three">
+    <button type="button" class="btn_back" (click)="goToPreviousStep()">
+      <span class="icon"><i class="material-icons">navigate_before</i></span
+      >Back
+    </button>
+    <button type="button" class="btn_done" (click)="goToNextStep()">
+      Done
+    </button>
+  </div>
+</div>

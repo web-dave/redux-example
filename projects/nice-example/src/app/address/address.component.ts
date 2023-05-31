@@ -30,6 +30,20 @@ import { PersonalState } from '../personal/store/personal.state';
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, StepComponent],
   templateUrl: './address.component.html',
+  styles: [
+    `
+      :host {
+        display: block;
+        /* margin-bottom: 35px; */
+      }
+      h2 {
+        color: var(--header-clr);
+        text-align: center;
+        text-transform: uppercase;
+        margin-bottom: 20px;
+      }
+    `,
+  ],
 })
 export class AddressComponent {
   title = 'Address';
