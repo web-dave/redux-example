@@ -8,4 +8,10 @@ export namespace StepActions {
     static readonly type = '[Step] Navigate';
     constructor(public payload: 'NEXT' | 'PREV', public step: Step) {}
   }
+  export class complete {
+    static readonly type = '[Step] Complete';
+  }
+  export class close {
+    static readonly type = '[Step] Close';
+  }
 }

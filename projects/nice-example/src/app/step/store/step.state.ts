@@ -29,7 +29,7 @@ export class StepState {
     ctx: StateContext<IStepState>,
     { payload, step }: StepActions.navigate
   ) {
-    let nextRoute = Step.two;
+    let nextRoute: Step | undefined = undefined;
     console.log(step, payload);
     switch (step) {
       case Step.one:
@@ -50,7 +50,11 @@ export class StepState {
         }
         break;
     }
-    this.router.navigate([nextRoute]);
-    return ctx.dispatch(new StepActions.submitStep(nextRoute));
+    if (nextRoute) {
+      this.router.navigate([nextRoute]);
+      return ctx.dispatch(new StepActions.submitStep(nextRoute));
+    } else {
+      return ctx.dispatch(new StepActions.complete());
+    }
   }
 }

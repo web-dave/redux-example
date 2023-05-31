@@ -11,6 +11,7 @@ import { PersonalState } from './personal/store/personal.state';
 import { AddressState } from './address/store/address.state';
 import { SkillState } from './skills/store/skill.state';
 import { StepComponent } from './step/step.component';
+import { ModalComponent } from './modal/modal.component';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +20,7 @@ import { StepComponent } from './step/step.component';
     AppRoutingModule,
     HeaderComponent,
     StepComponent,
+    ModalComponent,
     NgxsModule.forRoot(
       [StepState, PersonalState, AddressState, SkillState],
       {}
