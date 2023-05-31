@@ -6,19 +6,23 @@ import {
   Validators,
 } from '@angular/forms';
 import { StepComponent } from '../step/step.component';
-import { Subject, distinctUntilChanged, map } from 'rxjs';
+import { Subject, distinctUntilChanged, map, take } from 'rxjs';
 import { IPersonal } from 'models/personal.interface';
+import { Store } from '@ngxs/store';
+import { PersonalActions } from './store/personal.actions';
+import { StepActions } from '../step/store/step.actions';
+import { Step } from 'models/steps.interface';
+import { PersonalState } from './store/personal.state';
 
 @Component({
   selector: 'app-personal',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, StepComponent],
   templateUrl: './personal.component.html',
-  styleUrls: ['./personal.component.scss'],
 })
 export class PersonalComponent {
   title = 'Personal';
-  // private store = inject(Store<AppState>);
+  private store = inject(Store);
   private fb = inject(NonNullableFormBuilder);
   kill$ = new Subject<void>();
 
@@ -40,15 +44,15 @@ export class PersonalComponent {
   submitted = false;
 
   ngOnInit() {
-    // this.store
-    //   .select(selectPersonalGroupData)
-    //   .pipe(take(1))
-    //   .subscribe((personal: IPersonal) =>
-    //     this.personalForm.patchValue(personal, { emitEvent: false })
-    //   );
+    this.store
+      .select(PersonalState.selectData)
+      .pipe(take(1))
+      .subscribe((personal: IPersonal) =>
+        this.personalForm.patchValue(personal, { emitEvent: false })
+      );
 
     this.personalForm.valueChanges.subscribe((payload: Partial<IPersonal>) => {
-      // this.store.dispatch(patch({ payload }));
+      this.store.dispatch(new PersonalActions.patch(payload));
     });
 
     this.personalForm.statusChanges
@@ -56,9 +60,8 @@ export class PersonalComponent {
         map((status) => status === 'VALID'),
         distinctUntilChanged()
       )
-      .subscribe(
-        (isValid: boolean) => {}
-        // this.store.dispatch(changeValidationStatus({ isValid }))
+      .subscribe((isValid: boolean) =>
+        this.store.dispatch(new PersonalActions.changeValidationStatus(isValid))
       );
   }
 
@@ -67,6 +70,6 @@ export class PersonalComponent {
       this.submitted = true;
       return;
     }
-    // this.store.dispatch(navigate({ payload: 'NEXT', step: Step.one }));
+    this.store.dispatch(new StepActions.navigate('NEXT', Step.one));
   }
 }

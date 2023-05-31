@@ -5,19 +5,36 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { Subject, takeUntil, map, distinctUntilChanged } from 'rxjs';
+import {
+  Subject,
+  takeUntil,
+  map,
+  distinctUntilChanged,
+  tap,
+  filter,
+  switchMap,
+  take,
+} from 'rxjs';
 import { StepComponent } from '../step/step.component';
+import { Store } from '@ngxs/store';
+import { SkillActions } from './store/skill.actions';
+import { StepActions } from '../step/store/step.actions';
+import { Step } from 'models/steps.interface';
+import { ISkill } from 'models/skill.interface';
+import { navigate } from 'projects/ngrx-example/src/app/step/store/step.actions';
+import { selectSkillGroupData } from 'projects/ngrx-example/src/app/store/app.state';
+import { AddressState } from '../address/store/address.state';
+import { SkillState } from './store/skill.state';
 
 @Component({
   selector: 'app-skills',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, StepComponent],
   templateUrl: './skills.component.html',
-  styleUrls: ['./skills.component.scss'],
 })
 export class SkillsComponent {
   title = 'Skill';
-  // private store = inject(Store<AppState>);
+  private store = inject(Store);
   private fb = inject(NonNullableFormBuilder);
   kill$ = new Subject<void>();
 
@@ -40,29 +57,29 @@ export class SkillsComponent {
   submitted = false;
 
   ngOnInit() {
-    // this.store
-    //   .select(selectAddressGroupIsValid)
-    //   .pipe(
-    //     tap((data) => console.log(data)),
-    //     filter((data) => {
-    //       if (!data) {
-    //         this.store.dispatch(
-    //           navigate({ payload: 'PREV', step: Step.three })
-    //         );
-    //       }
-    //       return data;
-    //     }),
-    //     switchMap(() => this.store.select(selectSkillGroupData).pipe(take(1))),
-    //     takeUntil(this.kill$)
-    //   )
-    //   .subscribe((skill: ISkill) =>
-    //     this.skillForm.patchValue(skill, { emitEvent: false })
-    //   );
+    this.store
+      .select(AddressState.selectIsValid)
+      .pipe(
+        tap((data) => console.log(data)),
+        filter((data) => {
+          if (!data) {
+            this.store.dispatch(
+              navigate({ payload: 'PREV', step: Step.three })
+            );
+          }
+          return data;
+        }),
+        switchMap(() => this.store.select(SkillState.selectData).pipe(take(1))),
+        takeUntil(this.kill$)
+      )
+      .subscribe((skill: ISkill) =>
+        this.skillForm.patchValue(skill, { emitEvent: false })
+      );
 
     this.skillForm.valueChanges
       .pipe(takeUntil(this.kill$))
       .subscribe((payload) => {
-        // this.store.dispatch(patch({ payload }));
+        this.store.dispatch(new SkillActions.patch(payload));
       });
 
     this.skillForm.statusChanges
@@ -72,12 +89,12 @@ export class SkillsComponent {
         distinctUntilChanged()
       )
       .subscribe((isValid: boolean) => {
-        // this.store.dispatch(changeValidationStatus({ isValid }))
+        this.store.dispatch(new SkillActions.changeValidationStatus(isValid));
       });
   }
 
   goToPreviousStep() {
-    // this.store.dispatch(navigate({ payload: 'PREV', step: Step.three }));
+    this.store.dispatch(new StepActions.navigate('PREV', Step.three));
   }
 
   goToNextStep() {

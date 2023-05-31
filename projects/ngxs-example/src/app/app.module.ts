@@ -6,6 +6,10 @@ import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
 import { NgxsModule } from '@ngxs/store';
 import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
+import { StepState } from './step/store/step.state';
+import { PersonalState } from './personal/store/personal.state';
+import { AddressState } from './address/store/address.state';
+import { SkillState } from './skills/store/skill.state';
 
 @NgModule({
   declarations: [AppComponent],
@@ -13,7 +17,10 @@ import { NgxsReduxDevtoolsPluginModule } from '@ngxs/devtools-plugin';
     BrowserModule,
     AppRoutingModule,
     HeaderComponent,
-    NgxsModule.forRoot([], {}),
+    NgxsModule.forRoot(
+      [StepState, PersonalState, AddressState, SkillState],
+      {}
+    ),
     NgxsReduxDevtoolsPluginModule.forRoot(),
   ],
   providers: [],

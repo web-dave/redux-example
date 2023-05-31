@@ -7,18 +7,33 @@ import {
 } from '@angular/forms';
 import { StepComponent } from '../step/step.component';
 import { IAddress } from 'models/address.interface';
-import { Subject, takeUntil, map, distinctUntilChanged } from 'rxjs';
+import {
+  Subject,
+  takeUntil,
+  map,
+  distinctUntilChanged,
+  filter,
+  switchMap,
+  take,
+  tap,
+} from 'rxjs';
+import { Store } from '@ngxs/store';
+import { AddressActions } from './store/address.actions';
+import { StepActions } from '../step/store/step.actions';
+import { Step } from 'models/steps.interface';
+import { navigate } from 'projects/ngrx-example/src/app/step/store/step.actions';
+import { AddressState } from './store/address.state';
+import { PersonalState } from '../personal/store/personal.state';
 
 @Component({
   selector: 'app-address',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule, StepComponent],
   templateUrl: './address.component.html',
-  styleUrls: ['./address.component.scss'],
 })
 export class AddressComponent {
   title = 'Address';
-  // private store = inject(Store<AppState>);
+  private store = inject(Store);
   private fb = inject(NonNullableFormBuilder);
   kill$ = new Subject<void>();
 
@@ -43,29 +58,29 @@ export class AddressComponent {
   submitted = false;
 
   ngOnInit() {
-    // this.store
-    //   .select(selectPersonalGroupIsValid)
-    //   .pipe(
-    //     tap((data) => console.log(data)),
-    //     filter((data) => {
-    //       if (!data) {
-    //         this.store.dispatch(navigate({ payload: 'PREV', step: Step.two }));
-    //       }
-    //       return data;
-    //     }),
-    //     switchMap(() =>
-    //       this.store.select(selectAddressGroupData).pipe(take(1))
-    //     ),
-    //     takeUntil(this.kill$)
-    //   )
-    //   .subscribe((address: IAddress) =>
-    //     this.addressForm.patchValue(address, { emitEvent: false })
-    //   );
+    this.store
+      .select(PersonalState.selectIsValid)
+      .pipe(
+        tap((data) => console.log(data)),
+        filter((data) => {
+          if (!data) {
+            this.store.dispatch(navigate({ payload: 'PREV', step: Step.two }));
+          }
+          return data;
+        }),
+        switchMap(() =>
+          this.store.select(AddressState.selectData).pipe(take(1))
+        ),
+        takeUntil(this.kill$)
+      )
+      .subscribe((address: IAddress) =>
+        this.addressForm.patchValue(address, { emitEvent: false })
+      );
 
     this.addressForm.valueChanges
       .pipe(takeUntil(this.kill$))
       .subscribe((payload: Partial<IAddress>) => {
-        // this.store.dispatch(patch({ payload }));
+        this.store.dispatch(new AddressActions.patch(payload));
       });
 
     this.addressForm.statusChanges
@@ -75,7 +90,7 @@ export class AddressComponent {
         takeUntil(this.kill$)
       )
       .subscribe((isValid: boolean) => {
-        // this.store.dispatch(changeValidationStatus({ isValid }))
+        this.store.dispatch(new AddressActions.changeValidationStatus(isValid));
       });
   }
 
@@ -85,11 +100,11 @@ export class AddressComponent {
       return;
     }
 
-    // this.store.dispatch(navigate({ payload: 'NEXT', step: Step.two }));
+    this.store.dispatch(new StepActions.navigate('NEXT', Step.two));
   }
 
   goToPreviousStep() {
-    // this.store.dispatch(navigate({ payload: 'PREV', step: Step.two }));
+    this.store.dispatch(new StepActions.navigate('PREV', Step.two));
   }
 
   ngOnDestroy(): void {
